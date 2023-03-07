@@ -1,0 +1,65 @@
+{% extends "includes/base.html" %}
+{%load static %}
+{%block head%}
+{%endblock%}
+{% block content %}
+<div class="slider slider-single">
+    <div>
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
+        <div class="offer-item text-right">
+            <img src="{{food.img.url}}" alt="" class="img-responsive">
+            <div>
+                <h3 id='name' style='font-family:Yekan;'>{{food.name_food}}</h3>
+                <p class="text-right" style='font-family:Yekan;'>
+                    {{food.description}}
+                </p>
+            </div>
+            <span class="offer-price">{{food.price}}T</span>
+            <div>
+                <form method="post" id="formadd" enctype="multipart/form-data">
+                    {%csrf_token%}
+
+                            <input type="number" name='quantity' id="quantity" class='form-control-number' value="1" min='1' max='10'>
+                            <input hidden="true" type="hidden" id='id' name="id" value="{{food.id}}">
+                            <button class="btn btn-primary"style='margin-top:3px; font-family:Yekan;' type='submit'>افزودن به فیش</button>
+                </form>
+
+            </div>
+
+        </div>
+        <p id="food" class=" text-center"  style="font-weight:bold; font-family:Yekan; background-color:rgb(235, 242, 53);"></p>
+
+        </div>
+        <script src="{% static 'home/images/js/custom.js'%}"></script>
+        <script src="{% static 'home/images/js/handleCounter.js'%}"></script>
+        <script src="{% static 'home/images/js/bootstrap.min.js'%}"></script>
+        <script src="{% static 'home/images/js/modernizer.js'%}"></script>
+        <script src="{% static 'home/images/js/jquery-3.6.3.min.js'%}"></script>
+
+        <script>
+            
+
+            const form = document.getElementById('formadd');
+            form.addEventListener('submit', submitHandle);
+            function submitHandle(e){
+                e.preventDefault();
+    
+        $.ajax({
+                type: 'POST',
+                url: '/cart/addtocart/',
+                data:$('#formadd').serialize(),
+                dataType: 'json',
+                success: function(data){
+                    if (data.key == 'success'){
+                        var q = document.getElementById('quantity').value;
+                        var name = document.getElementById('name').innerHTML;
+                        document.getElementById('food').innerHTML = ` ✅با موفقییت  ${q} ${name}  به فیش اضافه شد`;
+                    }
+                }
+            }
+            )
+            }
+        </script>
+
+
+{% endblock %}

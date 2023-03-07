@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>سورس ریسپانسیو صفحه سبد خرید :: دریافت شده از وب روبیک</title>
+	<link type="text/css" href="{% static 'cart/css/style.css' %}" rel="stylesheet" />
+	<link rel="stylesheet" href="https://cdn.rtlcss.com/bootstrap/v4.2.1/css/bootstrap.min.css">
+</head>
+
+<body>
+	<div class="content">
+		<h1>سبد خرید</h1>
+		<p>تعداد محصولات را اضافه و کم کنید و سبد خود را آپدیت کنید.</p>
+		<!-- start undo button -->
+		<p class="removeAlert">
+			آیتم مورد نظر حذف شد. اشتباه کردید؟ <a href="#">برگرداندن آیتم</a>
+		</p>
+		<!-- end undo button -->
+
+
+		<table class="items">
+			
+			<thead>
+			<!-- start table head -->
+			<tr>
+				<th>نام محصول</th>
+				<th>قیمت</th>
+				<th>تعداد</th>
+				<th>مجموع</th>
+			</tr>
+			<!-- end table head -->
+			</thead>
+			<tbody>
+			<!-- start table body -->
+			{% for item in order.items.all %}
+			<tr>
+				<!-- start item one -->
+				<td>
+					<p> {{item.name}}<br /><span class="itemNum"></span></p>
+					<p class="description"></p>
+				</td>
+				<td>{{item.price}} تومان</td>
+				<td>
+					<h3>{{item.quantity}}</h3>
+				</td>
+				<td class="itemTotal">{{item.tprice}} تومان</td>
+				<!-- end item one -->
+			</tr>
+			{%endfor%}
+			<!-- end table body -->
+			</tbody>
+		</table>
+
+		<!-- start checkout list -->
+<form method="post" >
+	{% csrf_token %}
+		<div class="cost">
+			<h2>پیش فاکتور</h2>
+
+			<table class="pricing">
+				<tbody>
+
+				<tr>
+					<td><strong>هزینه پرداختی:</strong></td>
+					<td class="">{{order.total_price}} تومان</td>
+				</tr>
+				</tbody>
+			</table>
+			<button class="btn btn-success ml-2 mt-2"  type='submit'>پرداخت</button>
+
+		</div><!-- end checkout list -->
+	</div> <!-- End Content -->
+</form>
+
+
+	<script src="{% static 'cart/js/jquery-3.1.1.min.js' %}"></script>
+	<script src="{% static 'cart/js/jquery-ui.min.js' %}"></script>
+	<script  src="{% static 'cart/js/scripts.js' %} "></script>
+</body><!-- This template has been downloaded from Webrubik.com -->
+</html>

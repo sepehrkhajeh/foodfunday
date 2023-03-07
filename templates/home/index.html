@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+{% load  static%}
+<html lang="en">
+
+<head>
+
+    <!-- Basic -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <!-- Mobile Metas -->
+    <meta name="viewport" content="width=device-width, maximum-scale=1, initial-scale=1, user-scalable=0">
+
+    <!-- Site Metas -->
+    <title>Food Funday Restaurant - One page HTML Responsive</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Site Icons -->
+    <link rel="shortcut icon" href="{% static 'home/images/favicon.ico'%}" type="image/x-icon" />
+    <link rel="apple-touch-icon" href="{% static 'home/images/apple-touch-icon.png'%}">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="{% static 'home/css/bootstrap.min.css'%}">
+    <!-- Site CSS -->
+    <link rel="stylesheet" href="{% static 'home/css/style.css'%}">
+    <!-- Responsive CSS -->
+    <link rel="stylesheet" href="{% static 'home/css/responsive.css'%}">
+    <link rel="stylesheet" href="{% static 'home/css/fontyekan.css'%}">
+    <!-- color -->
+    <link id="changeable-colors" rel="stylesheet" href="{% static 'home/css/colors/orange.css'%}" />
+
+    <!-- Modernizer -->
+    <script src="{% static 'home/images/js/modernizer.js'%}"></script>
+
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body>
+    <div id="loader">
+        <div id="status"></div>
+    </div>
+    <div id="site-header">
+        <header id="header" class="header-block-top">
+            <div class="container">
+                <div class="row">
+                    <div class="main-menu">
+                        <!-- navbar -->
+                        <nav class="navbar navbar-default" id="mainNav">
+                            <div class="navbar-header">
+                                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                                    <span class="sr-only">Toggle navigation</span>
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                </button>
+                                <div class="logo">
+                                    <a class="navbar-brand js-scroll-trigger logo-header" href="#">
+                                        <img src="{% static 'home/images/logo.png'%}" alt=""> 
+                                        {% comment %} <h2 style="color: aliceblue; font-family: 'Times New Roman', Times, serif;">HERMES <span style="color:rgb(231, 91, 30)">FOOD</span></h2> {% endcomment %}
+                                    </a>
+                                </div>
+                            </div>
+                            <div id="navbar" style="font-family:Yekan !important;" class="navbar-collapse collapse">
+                                <ul class="nav navbar-nav navbar-right" >
+                                    <li class="active"><a href="#banner">خانه</a></li>
+                                    <li><a href="#about">درباره ما</a></li>
+                                    <li><a href="#menu">منو</a></li>
+                                    {%if request.user.is_authenticated %}
+                                    <li><a href="{% url 'cart:myorders'%}">سفارش های من</a></li> 
+                                    {%endif%}
+                                    <li><a href="#gallery">گالری</a></li>
+                                    {% if request.user.is_admin%}
+                                    <li><a href="{% url 'cart:paidorders'%}">سفارش های مشتری</a></li>
+                                    {% endif %}
+                                    {% comment %} <li><a href="#pricing">pricing</a></li> {% endcomment %}
+                                    {% comment %} <li><a href="#reservation">Reservaionت</a></li> {% endcomment %}
+                                    {% if request.user.is_anonymous%}
+                                    <li><a href="{% url 'accounts:register'%}">حساب</a></li>
+                                    {%else %}
+                                    <li><a href="{% url 'accounts:profile'%}">حساب</a></li>
+                                    {%endif %}
+                                </ul>
+                            </div>
+                            <!-- end nav-collapse -->
+                        </nav>
+                        <!-- end navbar -->
+                    </div>
+                </div>
+                <!-- end row -->
+            </div>
+            <!-- end container-fluid -->
+        </header>
+        <!-- end header -->
+    </div>
+	<!-- end site-header -->
+	
+    <div id="banner" class="banner full-screen-mode parallax">
+        <div class="container pr">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="banner-static">
+                    <div class="banner-text">
+                        <div class="banner-cell">
+                            <h1>Dinner with us  <span class="typer" id="some-id" data-delay="200" data-delim=":" data-words="Friends:Family:Officemates" data-colors="red"></span><span class="cursor" data-cursorDisplay="_" data-owner="some-id"></span></h1>
+                            <h2 style="font-family:Yekan;">کیفیت را با ما تجربه کنید</h2>
+                            {% if request.user.is_anonymous %}
+                            <p style="font-family:Yekan;">مشتری گرامی توجه داشته باشید جهت تکمیل خرید و ثبت سفارش ابتدا در سایت ثبت نام کنید</p>
+                            <div class="book-btn">
+                                <a href="{% url 'accounts:register'%}" style="font-family:Yekan;" class="table-btn hvr-underline-from-center">ثبت نام</a>
+                            </div>
+                            {%else %}
+                            <div class="book-btn">
+                                <a href="#menu" style="font-family:Yekan;" class="table-btn hvr-underline-from-center">منو</a>
+                            </div>
+                            {% endif%}
+                            <a href="#about">
+                                <div class="mouse"></div>
+                            </a>
+                        </div>
+                        <!-- end banner-cell -->
+                    </div>
+                    <!-- end banner-text -->
+                </div>
+                <!-- end banner-static -->
+            </div>
+            <!-- end col -->
+        </div>
+        <!-- end container -->
+    </div>
+    <!-- end banner -->
+
+    <div id="about" class="about-main pad-top-100 pad-bottom-100">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                    <div class="wow fadeIn" data-wow-duration="1s" data-wow-delay="0.1s">
+                        <h2 class="block-title"> About Us </h2>
+                        <h3>IT STARTED, QUITE SIMPLY, LIKE THIS...</h3>
+                        <p style="font-family:Yekan;direction:rtl;text-align:center">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده از طراحان گرافیک است، چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است، و برای شرایط فعلی تکنولوژی مورد نیاز، و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد، کتابهای زیادی در شصت و سه درصد گذشته حال و آینده، شناخت فراوان جامعه و متخصصان را می طلبد، تا با نرم افزارها شناخت بیشتری را برای طراحان رایانه ای علی الخصوص طراحان خلاقی، و فرهنگ پیشرو در زبان فارسی ایجاد کرد، در این صورت می توان امید داشت که تمام و دشواری موجود در ارائه راهکارها، و شرایط سخت تایپ به پایان رسد و زمان مورد نیاز شامل حروفچینی دستاوردهای اصلی، و جوابگوی سوالات پیوسته اهل دنیای موجود طراحی اساسا مورد استفاده قرار گیرد.</p>
+                    </div>
+                </div>
+                <!-- end col -->
+                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                    <div class="wow fadeIn" data-wow-duration="1s" data-wow-delay="0.1s">
+                        <div class="about-images">
+                            <img class="about-main" src="{% static 'home/images/about-main.jpg'%}" alt="About Main Image">
+                            <img class="about-inset" src="{% static 'home/images/about-inset.jpg'%}" alt="About Inset Image">
+                        </div>
+                    </div>
+                </div>
+                <!-- end col -->
+            </div>
+            <!-- end row -->
+        </div>
+        <!-- end container -->
+    </div>
+
+    <div class="special-menu pad-top-100 parallax">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="wow fadeIn" data-wow-duration="1s" data-wow-delay="0.1s">
+                        <h2 class="block-title color-white text-center"> Today's Special </h2>
+                        <h5 class="title-caption text-center"> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusm incididunt ut labore et dolore magna aliqua. Ut enim ad minim venia,nostrud exercitation ullamco. </h5>
+                    </div>
+                    <div class="special-box">
+                        <div id="owl-demo">
+                            <div class="item item-type-zoom">
+                                <a href="#" class="item-hover">
+                                    <div class="item-info">
+                                        <div class="headline">
+                                            SALMON STEAK
+                                            <div class="line"></div>
+                                            <div class="dit-line">Lorem ipsum dolor sit amet, consectetur adip aliqua. Ut enim ad minim venia.</div>
+                                        </div>
+                                    </div>
+                                </a>
+                                <div class="item-img">
+                                    <img src="{% static 'home/images/special-menu-1.jpg'%}" alt="sp-menu">
+                                </div>
+                            </div>
+                            <div class="item item-type-zoom">
+                                <a href="#" class="item-hover">
+                                    <div class="item-info">
+                                        <div class="headline">
+                                            ITALIAN PIZZA
+                                            <div class="line"></div>
+                                            <div class="dit-line">Lorem ipsum dolor sit amet, consectetur adip aliqua. Ut enim ad minim venia.</div>
+                                        </div>
+                                    </div>
+                                </a>
+                                <div class="item-img">
+                                    <img src="{% static 'home/images/special-menu-2.jpg'%}" alt="sp-menu">
+                                </div>
+                            </div>
+                            <div class="item item-type-zoom">
+                                <a href="#" class="item-hover">
+                                    <div class="item-info">
+                                        <div class="headline">
+                                            VEG. ROLL
+                                            <div class="line"></div>
+                                            <div class="dit-line">Lorem ipsum dolor sit amet, consectetur adip aliqua. Ut enim ad minim venia.</div>
+                                        </div>
+                                    </div>
+                                </a>
+                                <div class="item-img">
+                                    <img src="{% static 'home/images/special-menu-3.jpg'%}" alt="sp-menu">
+                                </div>
+                            </div>
+                            <div class="item item-type-zoom">
+                                <a href="#" class="item-hover">
+                                    <div class="item-info">
+                                        <div class="headline">
+                                            SALMON STEAK
+                                            <div class="line"></div>
+                                            <div class="dit-line">Lorem ipsum dolor sit amet, consectetur adip aliqua. Ut enim ad minim venia.</div>
+                                        </div>
+                                    </div>
+                                </a>
+                                <div class="item-img">
+                                    <img src="{% static 'home/images/special-menu-1.jpg'%}" alt="sp-menu">
+                                </div>
+                            </div>
+                            <div class="item item-type-zoom">
+                                <a href="#" class="item-hover">
+                                    <div class="item-info">
+                                        <div class="headline">
+                                            VEG. ROLL
+                                            <div class="line"></div>
+                                            <div class="dit-line">Lorem ipsum dolor sit amet, consectetur adip aliqua. Ut enim ad minim venia.</div>
+                                        </div>
+                                    </div>
+                                </a>
+                                <div class="item-img">
+                                    <img src="{% static 'home/images/special-menu-2.jpg'%}" alt="sp-menu">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end special-box -->
+                </div>
+                <!-- end col -->
+            </div>
+            <!-- end row -->
+        </div>
+        <!-- end container -->
+    </div>
+    <!-- end special-menu -->
+
+
+    <div id="menu" style="font-family:Yekan;" class="menu-main pad-top-100 pad-bottom-100">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="wow fadeIn" data-wow-duration="1s" data-wow-delay="0.1s">
+                        <h2 class="block-title text-center">
+                        Our Menu
+                    </h2>
+                        <p class="title-caption text-center" style='color:rgb(26, 127, 144);'>برای اطلاعات بیشتر در مورد غذا و افزودن به فیش بر روی دکمه نماش جزئیات کلیک کنید</p>
+                    </div>
+                    <div class="tab-menu">
+                        <div class="slider slider-nav">
+                            <div class="tab-title-menu">
+                                <h2>پیتزا و تویست</h2>
+                                <p> <i class="flaticon-canape"></i> </p>
+                            </div>
+                            <div class="tab-title-menu">
+                                <h2>ساندویج و خوراک</h2>
+                                <p> <i class="flaticon-dinner"></i> </p>
+                            </div>
+                            <div class="tab-title-menu">
+                                <h2>سالاد</h2>
+                                <p> <i class="flaticon-desert"></i> </p>
+                            </div>
+                            <div class="tab-title-menu">
+                                <h2>نوشیدنی</h2>
+                                <p> <i class="flaticon-coffee"></i> </p>
+                            </div>
+                        </div>
+                        <div class="slider slider-single">
+                            <div>
+                                {%for food in foods %}
+                                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 ">
+                                <div class="offer-item">
+                                    <img src="{{food.img.url}}" alt="" class="img-responsive">
+                                    <div class='text-right'>
+                                    <a href="{%url 'cart:food_details' food.id%}">
+                                        <h3 style="font-family:Yekan;">{{food.name_food}}</h3>
+                                        <p style="font-family:Yekan;">
+                                            {{food.description|truncatechars:45}}
+                                        </p>
+                                    </a>
+                                    <a class="btn btn-primary" href="{%url 'cart:food_details' food.id%}">نمایش جزئیات</a>
+                                    <button type="button" id='{{food.id}}' class="btn btn-success">{{food.price}}تومان</button>
+                                    </div>
+                                    <span class="offer-price">{{food.price}}T</span>
+
+                                </div>
+                                </div>
+                                {%endfor%}
+                                <!-- end col -->
+    
+                                <!-- end col -->
+                            </div>
+                            <div>
+                                {% for food in otherfoods%}
+
+                                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 ">
+                                    <div class="offer-item">
+                                        <img src="{{food.img.url}}" alt="sorry" class="img-responsive">
+                                        <div class='text-right'>
+                                            <h3>{{food.name_food}}</h3>
+                                            <p>
+                                                {{food.description|truncatechars:45}}
+                                            </p>
+                                            <a class="btn btn-primary" href="{%url 'cart:food_details' food.id%}">نمایش جزئیات</a>
+                                        </div>
+                                        <span class="offer-price">{{food.price}}T</span>
+                                    </div>
+                                </div>
+                                {%endfor%}
+                                <!-- end col -->
+                            </div>
+                            <div>
+                                {%for food in salad %}
+                                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 ">
+                                <div class="offer-item">
+                                    <img src="{{food.img.url}}" alt="" class="img-responsive">
+                                    <div class='text-right'>
+                                    <a href="{%url 'cart:food_details' food.id%}">
+                                        <h3 style="font-family:Yekan;">{{food.name_food}}</h3>
+                                        <p style="font-family:Yekan;">
+                                            {{food.description|truncatechars:45}}
+                                        </p>
+                                    </a>
+                                    <a class="btn btn-primary" href="{%url 'cart:food_details' food.id%}">نمایش جزئیات</a>
+                                    <button type="button" id='{{food.id}}' class="btn btn-success price">{{food.price}}تومان</button>
+                                    </div>
+                                    <span class="offer-price">{{food.price}}T</span>
+
+                                </div>
+                                </div>
+                                {%endfor%} 
+                            </div>
+                            <div>
+
+                                {%for food in drink %}
+                                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 ">
+                                <div class="offer-item">
+                                    <img src="{{food.img.url}}" alt="" class="img-responsive">
+                                    <div class='text-right'>
+                                    <a href="{%url 'cart:food_details' food.id%}">
+                                        <h3 style="font-family:Yekan;">{{food.name_food}}</h3>
+                                        <p style="font-family:Yekan;">
+                                            {{food.description|truncatechars:45}}
+                                        </p>
+                                    </a>
+                                    <a class="btn btn-primary" href="{%url 'cart:food_details' food.id%}">نمایش جزئیات</a>
+                                    <button type="button" id='{{food.id}}' class="btn btn-success">{{food.price}}تومان</button>
+                                    </div>
+                                    <span class="offer-price">{{food.price}}T</span>
+
+                                </div>
+                                </div>
+                                {%endfor%}
+                                <!-- end col -->
+                                <!-- end col -->
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end tab-menu -->
+                </div>
+                <!-- end col -->
+            </div>
+            <!-- end row -->
+        </div>
+        <!-- end container -->
+    </div>
+    <!-- end menu -->
+    <div class="text-center">
+    <a href="{% url 'cart:cart_details'%}"  style="width:300px;font-family:Yekan;" class="btn btn-info ">نمایش فیش</a>
+    </div>
+    <div id="gallery" class="gallery-main pad-top-100 pad-bottom-100">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="wow fadeIn" data-wow-duration="1s" data-wow-delay="0.1s">
+                        <h2 class="block-title text-center">
+						Our Gallery	
+					</h2>
+                        <p class="title-caption text-center" style="font-family:Yekan;">تصاویر زیر جنبه نمایش و زیبای وبسایت دارن</p>
+                    </div>
+                    <div class="gal-container clearfix">
+                        <div class="col-md-8 col-sm-12 co-xs-12 gal-item">
+                            <div class="box">
+                                <a href="#" data-toggle="modal" data-target="#1">
+                                    <img src="{% static 'home/images/gallery_01.jpg'%}" alt="" />
+                                </a>
+                                <div class="modal fade" id="1" tabindex="-1" role="dialog">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                                            <div class="modal-body">
+                                                <img src="{% static 'home/images/gallery_01.jpg'%}" alt="" />
+                                            </div>
+                                            <div class="col-md-12 description">
+                                                <h4>This is the 1 one on my Gallery</h4>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-sm-6 co-xs-12 gal-item">
+                            <div class="box">
+                                <a href="#" data-toggle="modal" data-target="#2">
+                                    <img src="{% static 'home/images/gallery_02.jpg'%}" alt="sorry" />
+                                </a>
+                                <div class="modal fade" id="2" tabindex="-1" role="dialog">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                                            <div class="modal-body">
+                                                <img src="{% static 'home/images/gallery_02.jpg'%}" alt="sorry" />
+                                            </div>
+                                            <div class="col-md-12 description">
+                                                <h4>This is the 2 one on my Gallery</h4>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-sm-6 co-xs-12 gal-item">
+                            <div class="box">
+                                <a href="#" data-toggle="modal" data-target="#3">
+                                    <img src="{% static 'home/images/gallery_03.jpg'%}" alt="sorry" />
+                                </a>
+                                <div class="modal fade" id="3" tabindex="-1" role="dialog">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                                            <div class="modal-body">
+                                                <img src="{% static 'home/images/gallery_03.jpg'%}" alt="sorry" />
+                                            </div>
+                                            <div class="col-md-12 description">
+                                                <h4>This is the 3 one on my Gallery</h4>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-sm-6 co-xs-12 gal-item">
+                            <div class="box">
+                                <a href="#" data-toggle="modal" data-target="#4">
+                                    <img src="{% static 'home/images/gallery_04.jpg'%}" alt="sorry" />
+                                </a>
+                                <div class="modal fade" id="4" tabindex="-1" role="dialog">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                                            <div class="modal-body">
+                                                <img src="{% static 'home/images/gallery_04.jpg'%}" alt="sorry" />
+                                            </div>
+                                            <div class="col-md-12 description">
+                                                <h4>This is the 4 one on my Gallery</h4>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-sm-6 co-xs-12 gal-item">
+                            <div class="box">
+                                <a href="#" data-toggle="modal" data-target="#5">
+                                    <img src="{% static 'home/images/gallery_05.jpg'%}" alt="sorry" />
+                                </a>
+                                <div class="modal fade" id="5" tabindex="-1" role="dialog">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                                            <div class="modal-body">
+                                                <img src="{% static 'home/images/gallery_05.jpg'%}" alt="sorry" />
+                                            </div>
+                                            <div class="col-md-12 description">
+                                                <h4>This is the 5 one on my Gallery</h4>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-sm-6 co-xs-12 gal-item">
+                            <div class="box">
+                                <a href="#" data-toggle="modal" data-target="#9">
+                                    <img src="{% static 'home/images/gallery_06.jpg'%}" alt="sorry" />
+                                </a>
+                                <div class="modal fade" id="9" tabindex="-1" role="dialog">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                                            <div class="modal-body">
+                                                <img src="{% static 'home/images/gallery_06.jpg'%}" alt="sorry" />
+                                            </div>
+                                            <div class="col-md-12 description">
+                                                <h4>This is the 6 one on my Gallery</h4>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-8 col-sm-12 co-xs-12 gal-item">
+                            <div class="box">
+                                <a href="#" data-toggle="modal" data-target="#10">
+                                    <img src="{% static 'home/images/gallery_07.jpg'%}" alt="sorry" />
+                                </a>
+                                <div class="modal fade" id="10" tabindex="-1" role="dialog">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                                            <div class="modal-body">
+                                                <img src="{% static 'home/images/gallery_07.jpg'%}" alt="sorry" />
+                                            </div>
+                                            <div class="col-md-12 description">
+                                                <h4>This is the 7 one on my Gallery</h4>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-sm-6 co-xs-12 gal-item">
+                            <div class="box">
+                                <a href="#" data-toggle="modal" data-target="#11">
+                                    <img src="{% static 'home/images/gallery_08.jpg'%}" alt="" />
+                                </a>
+                                <div class="modal fade" id="11" tabindex="-1" role="dialog">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                                            <div class="modal-body">
+                                                <img src="{% static 'home/images/gallery_08.jpg'%}" alt="" />
+                                            </div>
+                                            <div class="col-md-12 description">
+                                                <h4>This is the 8 one on my Gallery</h4>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-sm-6 co-xs-12 gal-item">
+                            <div class="box">
+                                <a href="#" data-toggle="modal" data-target="#12">
+                                    <img src="{% static 'home/images/gallery_09.jpg'%}" alt="" />
+                                </a>
+                                <div class="modal fade" id="12" tabindex="-1" role="dialog">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                                            <div class="modal-body">
+                                                <img src="{% static 'home/images/gallery_09.jpg'%}" alt="" />
+                                            </div>
+                                            <div class="col-md-12 description">
+                                                <h4>This is the 9 one on my Gallery</h4>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-sm-6 co-xs-12 gal-item">
+                            <div class="box">
+                                <a href="#" data-toggle="modal" data-target="#13">
+                                    <img src="{% static 'home/images/gallery_10.jpg'%}" alt="" />
+                                </a>
+                                <div class="modal fade" id="13" tabindex="-1" role="dialog">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                                            <div class="modal-body">
+                                                <img src="{% static 'home/images/gallery_10.jpg'%}" alt="" />
+                                            </div>
+                                            <div class="col-md-12 description">
+                                                <h4>This is the 10 one on my Gallery</h4>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end gal-container -->
+                </div>
+                <!-- end col -->
+            </div>
+            <!-- end row -->
+        </div>
+        <!-- end container -->
+    </div>
+    <!-- end gallery-main -->
+        <!-- end footer-news -->
+        <div class="footer-box pad-top-70">
+            <div class="container">
+                <div class="row">
+                    <div class="footer-in-main">
+                        <div class="footer-logo">
+                            <div class="text-center">
+                                <img src="{% static 'home/images/logo.png'%}" alt="" />
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                            <div class="footer-box-a">
+                                <h3>About Us</h3>
+                                <p>Aenean commodo ligula eget dolor aenean massa. Cum sociis nat penatibu set magnis dis parturient montes.</p>
+                                <ul class="socials-box footer-socials pull-left">
+                                    <li>
+                                        <a href="#">
+                                            <div class="social-circle-border"><i class="fa  fa-facebook"></i></div>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <div class="social-circle-border"><i class="fa fa-twitter"></i></div>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <div class="social-circle-border"><i class="fa fa-google-plus"></i></div>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <div class="social-circle-border"><i class="fa fa-pinterest"></i></div>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <div class="social-circle-border"><i class="fa fa-linkedin"></i></div>
+                                        </a>
+                                    </li>
+                                </ul>
+
+                            </div>
+                            <!-- end footer-box-a -->
+                        </div>
+                        <!-- end col -->
+                        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                            <div class="footer-box-b">
+                                <h3>New Menu</h3>
+                                <ul>
+                                    <li><a href="#">Italian Bomba Sandwich</a></li>
+                                    <li><a href="#">Double Dose of Pork Belly</a></li>
+                                    <li><a href="#">Spicy Thai Noodles</a></li>
+                                    <li><a href="#">Triple Truffle Trotters</a></li>
+                                </ul>
+                            </div>
+                            <!-- end footer-box-b -->
+                        </div>
+                        <!-- end col -->
+                        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                            <div class="footer-box-c">
+                                <h3>Contact Us</h3>
+                                <p>
+                                    <i class="fa fa-map-signs" aria-hidden="true"></i>
+                                    <span style="font-family:Yekan !important;">address insert here</span>
+                                </p>
+                                <p>
+                                <i class="fa fa-mobile" aria-hidden="true"></i>
+                                <span>
+									+98 917 3-6 --2-
+								</span>
+                                </p>
+                                <p>
+                                    <i class="fa fa-mobile" aria-hidden="true"></i>
+                                    <span>
+                                        ---45--533
+                                    </span>
+                                    </p>
+                                <p>
+                                    <i class="fa fa-envelope" aria-hidden="true"></i>
+                                    <span><a href="#">support@foodfunday.com</a></span>
+                                </p>
+                            </div>
+                            <!-- end footer-box-c -->
+                        </div>
+                        <!-- end col -->
+                        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                            <div class="footer-box-d">
+                                <h3>Opening Hours</h3>
+
+                                <ul>
+                                    <li>
+                                        <p>Saturday - Friday</p> </p>
+                                        <span> 00:00 AM - 18:00 PM</span>
+                                    </li>
+                                    <li>
+                                        <p>شنبه - جمعه </p>
+                                        <span>  00:00 AM - 18:00 PM</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <!-- end footer-box-d -->
+                        </div>
+                        <!-- end col -->
+                    </div>
+                    <!-- end footer-in-main -->
+                </div>
+                <!-- end row -->
+            </div>
+            <!-- end container -->
+            <div id="copyright" class="copyright-main">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <h6 class="copy-title"> This website was created by Sepehr Khajeh<a href="#" target="_blank"></a> </h6>
+                        </div>
+                    </div>
+                    <!-- end row -->
+                </div>
+                <!-- end container -->
+            </div>
+            <!-- end copyright-main -->
+        </div>
+        <!-- end footer-box -->
+    </div>
+    <!-- end footer-main -->
+
+    <a href="#" class="scrollup" style="display: none;">Scroll</a>
+
+    <section id="color-panel" class="close-color-panel">
+        <a class="panel-button gray2"><i class="fa fa-cog fa-spin fa-2x"></i></a>
+        <!-- Colors -->
+        <div class="segment">
+            <h4 class="gray2 normal no-padding">Color Scheme</h4>
+            <a title="orange" class="switcher orange-bg"></a>
+            <a title="strong-blue" class="switcher strong-blue-bg"></a>
+            <a title="moderate-green" class="switcher moderate-green-bg"></a>
+            <a title="vivid-yellow" class="switcher vivid-yellow-bg"></a>
+        </div>
+    </section>
+
+    <!-- ALL JS FILES -->
+    <script src="{% static 'home/images/js/all.js'%}"></script>
+    {% comment %} <script src="{% static 'home/images/js/ajax.js'%}"></script> {% endcomment %}
+    <script src="{% static 'home/images/js/bootstrap.min.js'%}"></script>
+    <!-- ALL PLUGINS -->
+    <script src="{% static 'home/images/js/custom.js'%}"></script>
+    <script src="{% static 'home/images/js/handleCounter.js'%}"></script>
+
+<script>
+        {% for food in foods%}
+            if (screen.width > 800){
+                console.log(screen.width)
+                document.getElementById({{food.id}}).remove();
+            }
+        {%endfor %}
+        $(function ($) {
+            var options = {
+                minimum: 1,
+                maximize: 10,
+                onChange: valChanged,
+                onMinimum: function(e) {
+                    console.log('reached minimum: '+e)
+                },
+                onMaximize: function(e) {
+                    console.log('reached maximize'+e)
+                }
+            }
+            $('#handleCounter').handleCounter(options)
+            $('#handleCounter2').handleCounter(options)
+			$('#handleCounter3').handleCounter({maximize: 100})
+        })
+        function valChanged(d) {
+//            console.log(d)
+        }
+    </script>
+    <script type="text/javascript">
+
+var _gaq = _gaq || [];
+_gaq.push(['_setAccount', 'UA-36251023-1']);
+_gaq.push(['_setDomainName', 'jqueryscript.net']);
+_gaq.push(['_trackPageview']);
+
+(function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+})();
+
+</script>
+</body>
+
+</html>

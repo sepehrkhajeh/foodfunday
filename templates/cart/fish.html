@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <title>Document</title>
+</head>
+<style>
+    table, th, td {
+        margin: auto;
+        text-align: center;
+        border: 1px solid rgb(9, 9, 9);
+        border-collapse: collapse;
+        width: 300px;
+        
+
+    }
+    th{
+        background-color: rgb(32, 200, 247);
+        
+    }
+    .container{
+        padding-top: 20px;
+        margin:  auto;
+    }
+    table{
+        margin-top: 30px;
+        margin-bottom: 20px;
+    }
+</style>
+<body>
+    <div class="col-md-12 col-lg-12 ">
+            <h6 class="text-center">{{order.user}}</h6>
+                <table>
+                <tr>
+
+                    <th>قیمت</th>
+                    <th>تعداد</th>
+                    <th>نام غذا</th>
+            
+                </tr>
+                {%for item in order.items.all %}
+                <tr id='{{item.id}}' onclick="khat({{item.id}})" ondblclick="dclick({{item.id}})">
+                    <td>{{item.price}}</td>
+                    <td>{{item.quantity}}</td>
+                    <td>{{item.name}}</td>
+            
+                </tr>
+                {%endfor %}
+                </table>
+                <h6 class="text-center">قیمت کل : {{order.total_price}}</h6>
+                <div class="text-center">
+                <p id='address' style='display: inline'>{{order.address}}</p>
+                <label class="text-center" for="address" ><b> : آدرس </b></label>
+                </div>
+                <div class="text-center mt-2">
+                <p id='description' style='display: inline'>{{order.description}}</p>
+                <label class="text-center" for="description" ><b> : درباره سفارش</b></label>
+                </div>
+                <div class="text-center mt-2">
+                <p id='phone' style='display: inline'></p>
+                <label class="text-center" for="phone" >{{request.user.phone}} <b> : شماره مشتری</b></label>
+                </div>
+        </div>
+
+    </table>
+</div>
+<script>
+    function khat(id){
+        document.getElementById(id).style.backgroundColor ='lightgrey';
+    }
+    function dclick(id){
+        document.getElementById(id).style.backgroundColor='white';
+    }
+</script>
+
+</body>
+</html>

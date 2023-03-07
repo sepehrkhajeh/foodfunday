@@ -1,0 +1,116 @@
+{%extends 'includes/base.html'%}
+{% load static%}
+
+{% block content %}
+<div class="row text-center">   
+    <div class="col-md-12"> 
+    <div class="card">
+        <div class="card-header border-transparent">
+        <h3 class="card-title">Latest Orders</h3>
+
+        <div class="card-tools">
+            <button type="button" class="btn btn-tool" data-card-widget="collapse">
+            <i class="fas fa-minus"></i>
+            </button>
+            <button type="button" class="btn btn-tool" data-card-widget="remove">
+            <i class="fas fa-times"></i>
+            </button>
+        </div>
+        </div>
+        <!-- /.card-header -->
+        <div class="card-body p-0">
+        <div class="table-responsive">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart" viewBox="0 0 16 16">
+                <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+            </svg>
+            <table class="table m-0" style='font-family:Yekan;'>
+            <thead>
+            <tr>
+                <th>آدرس</th>
+                <th>تاریخ</th>
+                <th>مشتری</th>
+                <th>هزینه پرداخت شده</th>
+                <th>باطل کردن فیش</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for item in orders %}
+            <tr id="{{item.id}}">
+                {% if item.is_paid %}
+                    <td><a href="{% url 'cart:myorderspay' item.id %}">{{ item.address }}</a></td>
+                {%else%}
+                    <td><a href="{% url 'cart:order_details' item.id %}">{{ item.address }}</a></td>
+                {%endif%}
+                <td>{{item.date_create}}</td>
+                
+                <td><span>{{item.user}}</span></td>
+                <td>
+                <div class="sparkbar" data-color="#00a65a" data-height="20">{{item.total_price}} T</div>
+                </td>
+                <td>
+                <button class="btn btn-danger text-white" style="font-family:Yekan;" onclick="undoOrder({{item.id}})" >باطل کردن</button>
+                </td>
+            </tr>
+            {%endfor%}
+
+            </tbody>
+            </table>
+        </div>
+        <!-- /.table-responsive -->
+        </div>
+        <!-- /.card-body -->
+        <div class="card-footer clearfix">
+        <a href="javascript:void(0)" class="btn btn-sm btn-info float-left">Place New Order</a>
+        <bottom class="btn btn btn-success w-25" onclick="refresh()">چک کردن</bottom>
+        <a href="javascript:void(0)" class="btn btn-sm btn-secondary float-right">View All Orders</a>
+        </div>
+        <!-- /.card-footer -->
+    </div>
+    </div>
+</div>
+    <!-- jQuery -->
+<script src="{% static 'accounts/plugins/jquery/jquery.min.js'%}"></script>
+<!-- jQuery UI 1.11.4 -->
+<script src="{% static 'accounts/plugins/jquery-ui/jquery-ui.min.js'%}"></script>
+<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+<script>
+    function undoOrder(id){
+        $.get(`/cart/undoorder/${id}`).then(response =>{
+            document.getElementById(id).remove();
+        })
+    }
+
+    function refresh(){
+        window.location.reload(true);
+    }
+$.widget.bridge('uibutton', $.ui.button)
+</script>
+<!-- Bootstrap 4 rtl -->
+<script src="https://cdn.rtlcss.com/bootstrap/v4.2.1/js/bootstrap.min.js"></script>
+<!-- Bootstrap 4 -->
+<script src="{% static 'accounts/plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+<!-- ChartJS -->
+<script src="{% static 'accounts/plugins/chart.js/Chart.min.js' %}"></script>
+<!-- Sparkline -->
+<script src="{% static 'accounts/plugins/sparklines/sparkline.js' %}"></script>
+<!-- JQVMap -->
+<script src="{% static 'accounts/plugins/jqvmap/jquery.vmap.min.js' %}"></script>
+<script src="{% static 'accounts/plugins/jqvmap/maps/jquery.vmap.world.js' %}"></script>
+<!-- jQuery Knob Chart -->
+<script src="{% static 'accounts/plugins/jquery-knob/jquery.knob.min.js' %}"></script>
+<!-- daterangepicker -->
+<script src="{% static 'accounts/plugins/moment/moment.min.js' %}"></script>
+<script src="{% static 'accounts/plugins/daterangepicker/daterangepicker.js' %}"></script>
+<!-- Tempusdominus Bootstrap 4 -->
+<script src="{% static 'accounts/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js' %}"></script>
+<!-- Summernote -->
+<script src="{% static 'accounts/plugins/summernote/summernote-bs4.min.js' %}"></script>
+<!-- overlayScrollbars -->
+<script src="{% static 'accounts/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js' %}"></script>
+<!-- AdminLTE App -->
+<script src="{% static 'accounts/dist/js/adminlte.js' %}"></script>
+<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+<script src="{% static 'accounts/dist/js/pages/dashboard.js' %}"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="{% static 'accounts/dist/js/demo.js' %}"></script>
+{%endblock %}

@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>سورس ریسپانسیو صفحه سبد خرید :: دریافت شده از وب روبیک</title>
+	<link type="text/css" href="{% static 'cart/css/style.css' %}" rel="stylesheet" />
+	<link rel="stylesheet" href="https://cdn.rtlcss.com/bootstrap/v4.2.1/css/bootstrap.min.css">
+
+</head>
+
+<body>
+	<div class="content">
+		<h1>فیش خرید</h1>
+		<p>تعداد محصولات را اضافه و کم کنید و سبد خود را آپدیت کنید.</p>
+		<!-- start undo button -->
+		<p  id='removeAlert'>
+		</p>
+		<!-- end undo button -->
+
+
+		<table class="items">
+			
+			<thead>
+			<!-- start table head -->
+			<tr>
+				<th>نام محصول</th>
+				<th>قیمت</th>
+				<th>تعداد</th>
+				<th>مجموع</th>
+			</tr>
+			<!-- end table head -->
+			</thead>
+			<tbody>
+			<!-- start table body -->
+			{% for item in cart %}
+			<tr id="{{item.id}}">
+				<!-- start item one -->
+				<td>
+					<div class="item" id="img">
+						<div class="item-front">
+							<img src="{{ item.img }}" />
+						</div>
+						<div  class="item-back">
+							<img src="{{ item.img }}" />
+						</div>
+					</div>
+					<p id='namefood'><a href="{%url 'cart:food_details' item.id %}">{{item.name_food}}</a><br><span class="itemNum"></span></p>
+					<p class="description" id="description">{{item.description|safe|truncatechars:20}}</p>
+				</td>
+				<td id='price'>{{item.price}} تومان</td>
+				<td>
+					<h3 id='quantity'>{{item.quantity}}</h3>
+					<button class="btn btn-danger " onclick="deleteItem({{item.id}},{{item.price}},{{item.quantity}})" id='btn'>حذف</button>
+				</td>
+				<td class="itemTotal" id="itemTotal">{{item.total}} تومان</td>
+
+				<!-- end item one -->
+			</tr>
+			{%endfor%}
+			<!-- end table body -->
+			</tbody>
+		</table>
+
+			
+		<!-- start checkout list -->
+<form method="post" action="{% url 'cart:order_creation'%}">
+	{% csrf_token %}
+		<div class="cost">
+			<h2>پیش فاکتور</h2>
+
+			<table class="pricing">
+				<tbody>
+				<tr>
+					<td>قیمت کل</td>
+					<td class="subtotall" id='pt'>{{cart.total_price}}</td>
+				</tr>
+				<tr hidden= true  id='send'>
+					<td>هزینه ارسال</td><td class="shipping"> بسته به سفارش شما ۷ الا ۱۵ تومان اعمال میگردد</td>
+				</tr>
+				<tr style="border-bottom: 1px solid lightgray;">
+					<td><strong>مجموع:</strong></td>
+					<td class="" id='totall'>{{cart.total_price}}</td>
+				</tr>
+				</tbody>
+			</table>
+			{% comment %} <input type="text" class="form-control"name="address" placeholder="محل تحویل"> {% endcomment %}
+
+			{% if request.user.is_anonymous%}
+			<a href="{% url 'accounts:register'%}" class="btn btn-primary">ثبت نام</a>
+			{%else%}
+			<div id='addr'>
+				<h5 class='text-center ' style="border-bottom: 1px solid lightgray; padding:3px;">آدرس</h5>
+				<input type="radio" id="address1" name="address" value="طبقه بالا هستم" required="true" >
+				<label for="address1">طبقه بالا هستم (لُژ خانوادگی)</label><br>
+				<input type="radio" id="address2" name="address" value="خودم میام تحویل میگیرم">
+				<label for="address2">خودم حضوری میام تحویل میگیرم</label><br>
+				<input type="radio" id="address3" name="address" onclick="costsend()" value="ٔدانشگاه">
+				<label for="address3" onclick="costsend()">دانشگاه (هزینه ارسال ۱۰ تومان)</label><br>
+			</div>
+			<div id="addr2">
+				<p id='p'></p>
+
+			</div>
+			<input type="text" name='description' class="form-control mt-1" id='description' placeholder='سفارش شما چطورآماده شود'>
+
+
+			<button class="btn btn-primary ml-1 mt-3"  type='submit'>ثبت سفارش</button>
+			<button class="btn btn-warning  mt-3"  type='button' id='addAddress' onclick="showInput()">افزودن آدرس دیگر</button>
+
+			{% endif%}
+		</div><!-- end checkout list -->
+	</div> <!-- End Content -->
+</form>
+
+
+	<script src="{% static 'cart/js/jquery-3.1.1.min.js' %}"></script>
+	<script src="{% static 'cart/js/jquery-ui.min.js' %}"></script>
+	<script  src="{% static 'cart/js/scripts.js' %} "></script>
+	<script>
+		function deleteItem(id,price,quantity) {
+			$.get(`/cart/delete/${id}`).then(response => {
+			const ID= id;
+			document.getElementById('removeAlert').innerHTML ='آیتم مورد نظر با موفقیت حذف شد ';
+			document.getElementById(ID).remove();
+			var p = price*1000*quantity;
+			console.log(p);
+			var total = Number(document.getElementById('totall').innerHTML);
+			console.log(total);
+			document.getElementById('totall').innerHTML = totall+10000;
+		
+			document.getElementById('totall').innerHTML = total-p;
+			document.getElementById('pt').innerHTML = total-p;
+
+			})
+		}
+		
+		function showInput(){
+			document.getElementById('addr').remove();
+			var inp = document.createElement('input');
+			inp.type = 'text';
+			inp.placeholder = 'آدرس';
+			inp.required = true;
+			inp.className = 'form-control';
+			inp.name = 'address';
+			var element = document.getElementById('addr2');
+			var child = document.getElementById("p1");
+			element.insertBefore(inp,child);
+			document.getElementById('addAddress').remove();
+			var s = document.getElementById('send');
+			s.hidden = false;
+
+			
+
+		}
+
+	</script>
+</body><!-- This template has been downloaded from Webrubik.com -->
+</html>
